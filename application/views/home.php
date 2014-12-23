@@ -1,3 +1,5 @@
+<h3>首页</h3>
+<hr/>
 <div id="content">
 	<?if($categories):?>
 	<ul>

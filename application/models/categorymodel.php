@@ -10,6 +10,18 @@ class categorymodel extends CI_Model {
 	}
 
 	/**
+	* 返回分类名字:
+	*/
+	public function getCategoryName($categoryId){
+		$query = $this->db->query("
+					SELECT *
+					FROM category
+					WHERE CategoryId = ".$this->db->escape($categoryId)."
+					");
+		return $query->row()->CategoryName;
+	}
+	
+	/**
 	* 返回一个route列表:
 	*/
 	public function getRoutes($categoryId){

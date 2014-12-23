@@ -1,3 +1,5 @@
+<h3>分类 >> <?=$categoryName;?></h3>
+<hr/>
 <div id="content">
 	<?if($routes):?>
 		<?foreach($routes as $route):?>

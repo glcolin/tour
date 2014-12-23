@@ -22,6 +22,8 @@ class Category extends CI_Controller {
 			redirect('404');
 			exit(1);
 		}
+		//Retrieve category name:
+		$this->data['categoryName'] = $this->categorymodel->getCategoryName($categoryId);
 		//Retrieve routes:
 		$this->data['routes'] = $this->categorymodel->getRoutes($categoryId);
 		//Load view:
