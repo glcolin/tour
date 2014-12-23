@@ -25,6 +25,6 @@
 </head>
 <body>
 
-<h1>USA4FUN</h1>
+<h1><a href="<?=base_url();?>">USA4FUN</a></h1>
 
 <hr/>

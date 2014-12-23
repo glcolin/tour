@@ -3,7 +3,7 @@
 /**
 * Colin - 12/21/2014
 */
-class Home extends CI_Controller {
+class Category extends CI_Controller {
 	
 	//Initialize data:
 	private $data = array();
@@ -11,17 +11,22 @@ class Home extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		//Loads:
-		$this->load->model('homemodel');
+		$this->load->model('categorymodel');
 	}
 	
 	public function index(){	
 		//Set common variables:
-		$this->data['title'] = 'Home Page';
-		//Get categories:
-		$this->data['categories'] = $this->homemodel->getCategories();
+		$this->data['title'] = 'Category';		
+		//Validate:
+		if(($categoryId = $this->uri->segment(2)) == FALSE){
+			redirect('404');
+			exit(1);
+		}
+		//Retrieve routes:
+		$this->data['routes'] = $this->categorymodel->getRoutes($categoryId);
 		//Load view:
 		$this->load->view('common/header',$this->data);
-		$this->load->view('home',$this->data);
+		$this->load->view('category',$this->data);
 		$this->load->view('common/footer',$this->data);
 		
 	}

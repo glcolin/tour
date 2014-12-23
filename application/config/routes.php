@@ -42,5 +42,9 @@ $route['default_controller'] = "home";
 $route['404_override'] = '';
 
 
+$route['category/:num'] = 'category';
+
+
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

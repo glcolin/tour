@@ -1,6 +1,13 @@
 body{
 	background:#eee;
 }
+a{
+	color:blue;
+	text-decoration:none;
+}
+a:hover{
+	color:orange;
+}
 #content{
 	min-height:600px;
 }
