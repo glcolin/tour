@@ -10,7 +10,7 @@ class categorymodel extends CI_Model {
 	}
 
 	/**
-	* 返回分类名字:
+	* è¿”å›žåˆ†ç±»å��å­—:
 	*/
 	public function getCategoryName($categoryId){
 		$query = $this->db->query("
@@ -22,11 +22,11 @@ class categorymodel extends CI_Model {
 	}
 	
 	/**
-	* 返回一个route列表:
+	* è¿”å›žä¸€ä¸ªrouteåˆ—è¡¨:
 	*/
 	public function getRoutes($categoryId){
 		$query = $this->db->query("
-					SELECT *
+					SELECT * 
 					FROM
 						(SELECT * 
 							FROM route
@@ -37,14 +37,26 @@ class categorymodel extends CI_Model {
 							FROM route_departure 
 							GROUP BY RouteId
 						) AS B
+					ON
+						A.RouteId = B.RouteId
 					JOIN
 						(SELECT RouteID, GROUP_CONCAT(City) AS Destinations
 							FROM route_destination
 							GROUP BY RouteId
 						) AS C
 					ON 
-						A.RouteId = B.RouteId 	
-						AND A.RouteId = C.RouteId
+						A.RouteId = C.RouteId
+					JOIN 
+						(SELECT RouteId, MIN(StartDate) AS MinDate, MAX(EndDate) AS MaxDate
+							FROM route_schedule
+							GROUP BY RouteId
+						) AS D
+					ON
+						A.RouteId = D.RouteId
+					LEFT JOIN 	
+						route_schedule_day AS E
+					ON 
+						A.RouteId = E.RouteId
 					");
 		if ($query->num_rows() > 0){
 			return $query->result();

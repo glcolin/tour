@@ -11,6 +11,10 @@
 						编码: <?=$route->Code;?><br/>
 						出发城市: <?=$route->Departures;?><br/>
 						结束城市: <?=$route->Destinations;?><br/>
+						出团时间: 
+							<?=datetime_print_route_dates($route->MinDate,$route->MaxDate);?> 
+							<?=datetime_print_weekdays($route->Days);?>
+						<br/>
 						天数: <?=$route->Duration;?><br/>
 						原价: <span style="text-decoration:line-through;"><?=$route->OriginPrice;?></span><br/>
 						特价: <?=$route->Price;?>

@@ -43,6 +43,7 @@ $route['404_override'] = '';
 
 
 $route['category/:num'] = 'category';
+$route['route/:num'] = 'route';
 
 
 

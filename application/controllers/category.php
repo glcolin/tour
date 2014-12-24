@@ -12,6 +12,7 @@ class Category extends CI_Controller {
 		parent::__construct();
 		//Loads:
 		$this->load->model('categorymodel');
+		$this->load->helper('datetime');
 	}
 	
 	public function index(){	
