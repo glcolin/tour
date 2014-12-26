@@ -14,7 +14,7 @@ class Home extends CI_Controller {
 		$this->load->model('homemodel');
 	}
 	
-	public function index(){	
+	public function index(){
 		//Set common variables:
 		$this->data['title'] = 'Home Page';
 		//Get categories:

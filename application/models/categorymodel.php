@@ -26,27 +26,35 @@ class categorymodel extends CI_Model {
 	*/
 	public function getRoutes($categoryId){
 		$query = $this->db->query("
-					SELECT * 
+					SELECT *, A.RouteId AS RouteId 
 					FROM
 						(SELECT * 
 							FROM route
 							WHERE CategoryId = ".$this->db->escape($categoryId)."
+							AND (StoreId = 1 OR StoreId = ".$GLOBALS['store_id'].") 
 						) AS A
 					JOIN 
+						(SELECT RouteId
+							FROM store_route
+							WHERE StoreId = ".$GLOBALS['store_id']."
+						) AS F
+					ON
+						A.RouteId = F.RouteId
+					LEFT JOIN 
 						(SELECT RouteID, GROUP_CONCAT(City) AS Departures
 							FROM route_departure 
 							GROUP BY RouteId
 						) AS B
 					ON
 						A.RouteId = B.RouteId
-					JOIN
+					LEFT JOIN 
 						(SELECT RouteID, GROUP_CONCAT(City) AS Destinations
 							FROM route_destination
 							GROUP BY RouteId
 						) AS C
 					ON 
 						A.RouteId = C.RouteId
-					JOIN 
+					LEFT JOIN 
 						(SELECT RouteId, MIN(StartDate) AS MinDate, MAX(EndDate) AS MaxDate
 							FROM route_schedule
 							GROUP BY RouteId

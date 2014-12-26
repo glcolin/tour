@@ -23,6 +23,11 @@ class Route extends CI_Controller {
 			redirect('404');
 			exit(1);
 		}
+		//Check if it is in store:
+		if(!$this->routemodel->isInStore($routeId)){
+			redirect('404');
+			exit(1);
+		}
 		//Retrieve route info:
 		$this->data['route'] = $this->routemodel->getRouteInfo($routeId);
 		$this->data['departures'] = $this->routemodel->getDepartures($routeId);

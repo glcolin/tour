@@ -10,6 +10,22 @@ class routemodel extends CI_Model {
 	}
 	
 	/**
+	* 是否该路线在store里面:
+	*/
+	public function isInStore($routeId){
+		$query = $this->db->query("
+					SELECT *
+					FROM store_route
+					WHERE RouteId = ".$this->db->escape($routeId)." AND StoreId = ".$GLOBALS['store_id']."
+					");
+		if ($query->num_rows() > 0){
+			return TRUE;
+		}else{
+			return FALSE;
+		}
+	}
+	
+	/**
 	* 提取路线信息:
 	*/
 	public function getRouteInfo($routeId){
@@ -60,7 +76,11 @@ class routemodel extends CI_Model {
 					FROM route_schedule
 					WHERE RouteId = '".$routeId."'
 					");
-		return $query->row()->StartDate;
+		if ($query->num_rows() > 0){
+			return $query->row()->StartDate;
+		}else{
+			return FALSE;
+		}
 	}
 	
 	/**
@@ -72,7 +92,11 @@ class routemodel extends CI_Model {
 					FROM route_schedule
 					WHERE RouteId = '".$routeId."'
 					");
-		return $query->row()->EndDate;
+		if ($query->num_rows() > 0){
+			return $query->row()->EndDate;
+		}else{
+			return FALSE;
+		}
 	}
 	
 	/**
@@ -84,7 +108,12 @@ class routemodel extends CI_Model {
 					FROM route_schedule_day
 					WHERE RouteId = '".$routeId."'
 					");
-		return $query->row()->Days;
+		if ($query->num_rows() > 0){
+			return $query->row()->Days;
+		}else{
+			return FALSE;
+		}
+		
 	}
 
 }
