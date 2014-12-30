@@ -68,6 +68,22 @@ class routemodel extends CI_Model {
 	}
 	
 	/**
+	* 提取时间表:
+	*/
+	public function getSchedule($routeId){
+		$query = $this->db->query("
+					SELECT *
+					FROM route_schedule
+					WHERE RouteId = '".$routeId."'
+					");
+		if ($query->num_rows() > 0){
+			return $query->result();
+		}else{
+			return FALSE;
+		}
+	}
+	
+	/**
 	* 提取开始日期:
 	*/
 	public function getStartDate($routeId){
@@ -114,6 +130,23 @@ class routemodel extends CI_Model {
 			return FALSE;
 		}
 		
+	}
+	
+	/**
+	* 提取房间信息:
+	*/
+	public function getRooms($routeId){
+		$query = $this->db->query("
+					SELECT *
+					FROM route_room
+					WHERE RouteId = '".$routeId."' 
+					order by RoomNumber
+					");
+		if ($query->num_rows() > 0){
+			return $query->result();
+		}else{
+			return FALSE;
+		}
 	}
 
 }

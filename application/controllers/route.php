@@ -35,11 +35,59 @@ class Route extends CI_Controller {
 		$this->data['start'] = $this->routemodel->getStartDate($routeId);
 		$this->data['end'] = $this->routemodel->getEndDate($routeId);
 		$this->data['weekdays'] = $this->routemodel->getWeekdays($routeId);
+		$this->data['schedule'] = $this->routemodel->getSchedule($routeId);
+		$this->data['departure_date'] = $this->getDepartureDate($this->data);
+		$room_info = $this->routemodel->getRooms($routeId);
+		$rooms_price = array();
+		if($room_info){
+			foreach($room_info as $value){
+				$rooms_price[$value->RoomNumber] = $value->Price;
+			}
+		}
+		$this->data['rooms_price'] = $rooms_price;
+		
 		//Load view:
 		$this->load->view('common/header',$this->data);
 		$this->load->view('route',$this->data);
 		$this->load->view('common/footer',$this->data);
 		
+	}
+	
+	public function getDepartureDate($data){
+		$weekdays = $data['weekdays'];
+		$schedule = $data['schedule'];
+		
+		$result = array();
+		
+		$weekdays_arr = array();
+		if($weekdays){
+			$weekdays_arr = explode(',',$weekdays);
+		}
+		
+		foreach($schedule as $value){
+			$inner_dates = array();
+			if($value->EndDate){
+				$inner_dates = range(date('Ymd',strtotime($value->StartDate)),date('Ymd',strtotime($value->EndDate)));
+			}
+			else{
+				$result[] = date('Ymd',strtotime($value->StartDate));
+			}
+
+			foreach($inner_dates as $inner_date){
+				$inner_date = strval($inner_date);
+				if($weekdays_arr){
+					$week = idate('w',strtotime($inner_date));
+					if(in_array($week,$weekdays_arr)){
+						$result[] = $inner_date;
+					}
+				}
+				else{
+					$result[] = $inner_date;
+				}
+			}
+		}
+		
+		return $result;
 	}
 	
 }
